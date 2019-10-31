@@ -103,11 +103,11 @@ from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffe
 // }
 
 function pem2derB64(pem){
-    return pem.replace(/-----BEGIN [^-]+-----/,"","g").replace(/-----END [^-]+-----/,"","g").replace("\n","","g")
+    return pem.replace(/-----BEGIN [^-]+-----/gm,"").replace(/-----END [^-]+-----/gm,"").replace(/\n/gm,"")
 }
 
 function pem2derArr(pem){
-    return Base64Binary.decode(pem2derB64(data))
+    return base64Decode(pem2derB64(pem))
 }
 
 /*
@@ -206,6 +206,10 @@ function base64Decode( string )
         var b2 = characters.indexOf( string.charAt(i++) );
         var b3 = characters.indexOf( string.charAt(i++) );
         var b4 = characters.indexOf( string.charAt(i++) );
+
+        if (b1<0 || b2<0 || b3<0 || b4<0){
+          throw new Error("invalid character found in base64")
+        }
 
         var a = ( ( b1 & 0x3F ) << 2 ) | ( ( b2 >> 4 ) & 0x3 );
         var b = ( ( b2 & 0xF  ) << 4 ) | ( ( b3 >> 2 ) & 0xF );
@@ -368,7 +372,7 @@ async function main(){
     const pkpInputArr = encoder.encode(pkpInput)
     //console.log(`PKP input: ${pkpInput}`)
     const pkpValueArr = await crypto.subtle.sign("RSASSA-PKCS1-v1_5",key,pkpInputArr)
-    const pkpValueB64 = Base64Binary. base64ArrayBuffer(pkpValueArr)
+    const pkpValueB64 = base64Encode(pkpValueArr)
     console.log(`pkp value: ${pkpValueB64}`)
     data.pkp = pkpValueB64
 
