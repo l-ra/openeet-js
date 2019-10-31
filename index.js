@@ -1,13 +1,12 @@
 const data = {
-	"dat_odesl":null,
+	"dat_odesl":"2019-10-31T01:44:45+01:00",
 	"prvni_zaslani":"true",
-	"uuid_zpravy":null,
-
+	"uuid_zpravy":"8c13f57e-e250-4fcd-99d8-77b1088d4b84",
 	"dic_popl":"CZ7312261506",
 	"id_provoz":"41",
 	"id_pokl":"POKLADNA01",
 	"porad_cis":"1",
-	"dat_trzby":null,
+	"dat_trzby":"2019-10-31T01:44:45+01:00",
 	"celk_trzba":"0.00",
 	"rezim":"0",
 	"overeni":"false",
@@ -294,16 +293,19 @@ async function main(){
     const key = await importPrivateKey(privateKey)
 
     //init data
-    data.dat_odesl = new Date().toISOString()
+    if (!data.dat_odesl) {
+        data.dat_odesl = new Date().toISOString()
+    }
     if (!data.dat_trzby) {
         data.dat_trzby = new Date().toISOString()
     }
-    data.uuid_zpravy = uuidv4();
+    if (!data.uuid_zpravy) {
+        data.uuid_zpravy = uuidv4();
+    } 
     const pkpInput = `${data["dic_popl"]}|${data["id_provoz"]}|${data["id_pokl"]}|${data["porad_cis"]}|${data["dat_trzby"]}|${data["celk_trzba"]}`
     const pkpInputArr = encoder.encode(pkpInput)
     //console.log(`PKP input: ${pkpInput}`)
-    const pkpHash = await crypto.subtle.digest("SHA-256",pkpInputArr)
-    const pkpValueArr = await crypto.subtle.sign("RSASSA-PKCS1-v1_5",key,pkpHash)
+    const pkpValueArr = await crypto.subtle.sign("RSASSA-PKCS1-v1_5",key,pkpInputArr)
     const pkpValueB64 = base64ArrayBuffer(pkpValueArr)
     console.log(`pkp value: ${pkpValueB64}`)
     data.pkp = pkpValueB64
