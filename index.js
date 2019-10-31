@@ -15,33 +15,61 @@ const data = {
 }
 
 const privateKey = `-----BEGIN PRIVATE KEY-----
-MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDct0DGcPgOdSqY
-Y4zAaIQPI+D44clgYHQ2xJJClYle51tn/12enc+XlWkhntmusPOxhWlIzpUeLMqv
-0SVhUB07BVChJDs+SgYgjEPhpWRB3IdDbwMNoh+rSTc2gq8XAYbEcXP/i1yVSwsE
-w77dyT9TPdsESQ5YOr8kYAfS4Q3K+gixXE7URVu40M2NL5Vb0V0R5ip62HNNwCjJ
-V2JHZWD7o6v6nQWROTtV0VBdzfv0ZgeBq7xhNJRVXKP68gQiuqY2r/34HsXtn3e4
-2dPfEWkMZHnO+EQIg+EAMBS7r8fvkzB1gPpyUjhQ+Sw+hy1HlY6pY8iN8z8viBlf
-M8ClJmgBAgMBAAECggEBAKTF8gezgpxYgCov934VCLG82VE0ToAywc+5RG+M73b4
-RVcIX73wlm/VzRyaWGyAEg3vSUBfaReT3OUQwFU71/ad6ynBwLCp1pUp4ets68H3
-fsuq7p6Y8AeRqzR4r3n/W7r/79dRFRcnZNxzveQZP7tHLGCwoZLgmJ3xSyX1ebST
-PgXi+HiTINsGjHOnm9aN2VR3X33HQP9UKUV4ujtwEs005mkf3+hUIR0fdHlqx5Vg
-RplSA9osYOrsxziP7rG6skoQkzTm9JgKQU/cq/FlLpdTCAUilvx5unmz6rUPwxNB
-4bgNdGp5PFKTCCXIUstiCeoSpBXPnAxNs4NbeNkz7tkCgYEA9y/kXzNwQF1UbAkr
-GF1TTR0+GDpIztseUPHQjl1/WRdNrAB/58/Y0dhoj45MvE5GT9uja7Avfz2bgPuf
-mOFH0mhZfxLu7tV5e3zzltqpzMb3RBA0wPVjTU9G1SckckwUI3+mwfK0lDhdGwxj
-OY3PuOLdwvNYWWAD3baHFXad4lMCgYEA5JXBKAEhqOSL1xN1P7t/n0ebcMZJY2Ka
-xAthMq6Px2FcOnxIn5dEIPECu+3uDmPvVA6tVrUvAlKWy6Fc809hXzwb4uDn6xu2
-Ybs2yWxAWL1CxKlu7K4DRUKu+nHcjQ4IgstOk4ApajoUUx6nDUWRRi1Y+wrnfXzV
-6WEUalv/qdsCgYEAymm7VoHmr649TWKMmZ0Cc6k4idpgeJNR1fLOV2YUvD2q6uhV
-1NuMrvnJVZSvHZvzU72Fqs9RdZ5bUlm6LRR9Hb05XCeC5KyGmCqPxb41QWzEWkXz
-DPdkY5BBbpZo7/eAnjkPss4uNRmalGWmcyC/MqUD93oRpM5NHCc1osvJKeUCgYBi
-qVygprRfkJ3nLCfcZVJ1blPiPkOo2QOSAJNoa731QcmsGL7D22d1jHEwqkapAWto
-bZlVpohuyTT7GV/kSOvvTiN/LrILYX+7+TFxiP7RDoeGGNee4pDY0SpzQLgATgFQ
-au40bgnyJrVlFwLlkJRepO4WFSPLnxk5TUShj6nvJwKBgG76Wd3OzKOn0XtLo9mA
-OsLb3rZEGpC8BL/mFKBzUk45B7zgvu9JW3S3vhOaonnm9A9l9YYGi+TQgoOkQ1gj
-U9Kd8qTt8lP2Pa7vNn46k8f6Cjvpa84GXC2SjK2BeCC0SSbL1nCUCodbBjLWNouI
-QodStecsNZouBjga7I8bEpz+
+MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDrVmZ6FE2jYqli
+43/LbXZ1vEG8USMRcC/zbGgk5mAoQQKMtF5PIm5i84pd0cPOSRtduNODc7mwjbPK
+d5r8p592zNhpei0/XbQcYQ5rpdf0Y84ZNbg9ZmB4nF8YCBy3Gk28YxfW//vIjqvk
+uQK6InT4l784gtz/iNAV48ZBkgE/jp+MMii1I+y5EyYkQuRZlCJtOTKdPXECnr5O
+rxrGUtbjmF7bBWLD2LXlspZoUOmh4RFfd9WHH8PmcQfij5aJq6cgIB2YENCBHSA1
+/HZZEd8vNLv05owb/BOvXj4n86lYJ8tlJVMcorAsrEzVy+XU++78/j9PewL0ft0j
+ETHd0U8DAgMBAAECggEBAIqz154oDUI4yiCweQeKsoDdvdih8Ys7ledgg1kMNqxC
+9J+9RsBZSLolU+3Lzh3s1KY+Yttc/5phShAQwlYa7U91mC9ChRyNu7PmODuV+Vve
+3v/Yu4fkqQMtFpbxYQtCA4L+3HQpV1pzTDh4GnVeDZbeySMjbeFl306nepf216l+
+4o2t260RCgC9NU6kybrgrL9mpa2v+0XNugKzjwy3Lv5KUhtTanQm7fOztb8DxvqP
+h/j8j504d3SCWTzeGwYWw2lwDZx0wAP0b0fB8oiO9JzHBc+t/R18vS6LaslDmvLi
+DM8R0ivySdSJKD5f5CAWlMTkcKkbFblnUhw7KTCH77ECgYEA9+TUwiPf4aZiIzMW
+I2Y7AdkF9uwmTzaXZYN+MQycShwfmpOscY+6EL2f2majCGcNEduPB3ZLSgkk1oga
+g4Q2VKDyTSMT70FyRGCm/hIHxtWm2KWpUcJ0LKwV3C+XS+v3dI9cEuFeiC2Dv67Y
+GLqAnqPUS4Pv8Ed3nLN4zZdONWUCgYEA8wh1FDS9KczhgyzPU+a59blVER0LP7c2
+ErXCk815qCsM3aNy1NBFfuyLuChf6XxRvArRibI9TtFlSWq9PKsSWRwgILpS8YxO
+g5QA5iJdh5O1L6EGnFmLiw1aUlMJsKmsc2f5klLAacA6ljIFB6A1voeume1Ryozq
+wYhO2uLWgEcCgYBBt5pntVb+3TsbFcoCrHFsNfqM0WH+kfxk3w0vN6afRwFh21BV
+8sJi+cJNBfSmn5spZsluMwAWqoHnlcFhqEU2/kv+AxSf0vvWAMGEjYceQTmwKYrP
+r/tYdG5/Jua3K+E4N2EzaCfFdjt9L37+X0MFy2zWcC3Fx0yAcFvQNRJ4uQKBgHAC
+nNtUNz7Vs7YeZ+vWciyjX2aEyVNzYFOdO/GdCQ4N0V8xXtJgrzcBVJ/q09Grv4v4
+PHzHDmSOM61zqYYVnl49jT0oQuQa83DHPObUPeEnnaE3CPH0f1D2NYOty9CFUvrZ
+l/ftdcsHkrj4ksLh/wMyS7Gb5E+DRQsvhJBzbcMvAoGBAODcoE5dkDH6jPYOkwC5
+9cp6olFNc8Mp5+XF3mAMkpiB16lPM/SdolAmuTl+cDF5QJoCAJOMkRAOWJqpPZkw
+kG2TVi0t2EQa5xCBbsadl82uKB50+BbViRkaHQUinFDKLZWlUQdjgLT7U1PXza4W
+A6ns1H9hLvnZpCRasR6oMVqf
 -----END PRIVATE KEY-----
+`
+const certificate = `-----BEGIN CERTIFICATE-----
+MIIEmTCCA4GgAwIBAgIFAKCnuv0wDQYJKoZIhvcNAQELBQAwdzESMBAGCgmSJomT
+8ixkARkWAkNaMUMwQQYDVQQKDDrEjGVza8OhIFJlcHVibGlrYSDigJMgR2VuZXLD
+oWxuw60gZmluYW7EjW7DrSDFmWVkaXRlbHN0dsOtMRwwGgYDVQQDExNFRVQgQ0Eg
+MSBQbGF5Z3JvdW5kMB4XDTE5MDgwODE5MjM0MloXDTIyMDgwODE5MjM0MlowQzES
+MBAGCgmSJomT8ixkARkWAkNaMRMwEQYDVQQDEwpDWjAwMDAwMDE5MRgwFgYDVQQN
+Ew9wcmF2bmlja2Egb3NvYmEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+AQDrVmZ6FE2jYqli43/LbXZ1vEG8USMRcC/zbGgk5mAoQQKMtF5PIm5i84pd0cPO
+SRtduNODc7mwjbPKd5r8p592zNhpei0/XbQcYQ5rpdf0Y84ZNbg9ZmB4nF8YCBy3
+Gk28YxfW//vIjqvkuQK6InT4l784gtz/iNAV48ZBkgE/jp+MMii1I+y5EyYkQuRZ
+lCJtOTKdPXECnr5OrxrGUtbjmF7bBWLD2LXlspZoUOmh4RFfd9WHH8PmcQfij5aJ
+q6cgIB2YENCBHSA1/HZZEd8vNLv05owb/BOvXj4n86lYJ8tlJVMcorAsrEzVy+XU
+++78/j9PewL0ft0jETHd0U8DAgMBAAGjggFeMIIBWjAJBgNVHRMEAjAAMB0GA1Ud
+DgQWBBT8zaUMxlfEGXSD/2PZ089ZLGgerTAfBgNVHSMEGDAWgBR8MHaszNaH0ezJ
+H+JwCCzjX94MBzAOBgNVHQ8BAf8EBAMCBsAwYwYDVR0gBFwwWjBYBgpghkgBZQMC
+ATABMEowSAYIKwYBBQUHAgIwPAw6VGVudG8gY2VydGlmaWvDoXQgYnlsIHZ5ZMOh
+biBwb3V6ZSBwcm8gdGVzdG92YWPDrSDDusSNZWx5LjCBlwYDVR0fBIGPMIGMMIGJ
+oIGGoIGDhilodHRwOi8vY3JsLmNhMS1wZy5lZXQuY3ovZWV0Y2ExcGcvYWxsLmNy
+bIYqaHR0cDovL2NybDIuY2ExLXBnLmVldC5jei9lZXRjYTFwZy9hbGwuY3Jshipo
+dHRwOi8vY3JsMy5jYTEtcGcuZWV0LmN6L2VldGNhMXBnL2FsbC5jcmwwDQYJKoZI
+hvcNAQELBQADggEBAKVFyv168b/q0X568G+JDvNnz4XVElbJ1r9ro/xv58QP+FD8
+PJSR5qxN2F7zKGNYTCee0jSo+XY1KEoSkmeoYHXnQpm7+NG7iUYc2OWu0B3hC/wM
+MhNEDtmsTwqSLjgSk6pZTTRXfvtaHf7zvU8iw1PGFhb9m9bJlOfLwoMeFclOpdfo
+80pbwRz5t8io/c0lvGodlYj7INHxjlwdwWf3m2mUx4iuKvoAev0ASCdSMDuUWWjY
+iMT3PEUqeabeM2dn3xccQ2EhgIcCwhQs2MCA/FDLBbiOt63mUJPJHATIFi/31VKt
+z11/Gc434HHsVYB8U/aammSyIfMp6bNE6LhaFe8=
+-----END CERTIFICATE-----
 `
 
 const encoder = new TextEncoder()
@@ -60,17 +88,26 @@ function uuidv4() {
     });
 }
 
+
 /*
 Convert a string into an ArrayBuffer
 from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
 */
-function str2ab(str) {
-    const buf = new ArrayBuffer(str.length);
-    const bufView = new Uint8Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
+// function str2ab(str) {
+//     const buf = new ArrayBuffer(str.length);
+//     const bufView = new Uint8Array(buf);
+//     for (let i = 0, strLen = str.length; i < strLen; i++) {
+//       bufView[i] = str.charCodeAt(i);
+//     }
+//     return buf;
+// }
+
+function pem2derB64(pem){
+    return pem.replace(/-----BEGIN [^-]+-----/,"","g").replace(/-----END [^-]+-----/,"","g").replace("\n","","g")
+}
+
+function pem2derArr(pem){
+    return Base64Binary.decode(pem2derB64(data))
 }
 
 /*
@@ -81,11 +118,7 @@ Takes a string containing the PEM encoded key, and returns a Promise
 that will resolve to a CryptoKey representing the private key.
 */
 function importPrivateKey(pem) {
-    // fetch the part of the PEM string between header and footer
-    const pemHeader = "-----BEGIN PRIVATE KEY-----";
-    const pemFooter = "-----END PRIVATE KEY-----";
-    const pemContents = pem.replace(pemHeader,"","g").replace(pemFooter,"","g").replace("\n","","g")
-    const binaryDer = Base64Binary.decode(pemContents);
+    const binaryDer = pem2derArr(pem);
  
     return window.crypto.subtle.importKey(
       "pkcs8",
@@ -103,7 +136,7 @@ function importPrivateKey(pem) {
   }
 
   //https://gist.github.com/jonleighton/958841#gistcomment-1953137
-  function base64ArrayBuffer(arrayBuffer) {
+function base64Encode(arrayBuffer) {
     let base64 = '';
     const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   
@@ -158,98 +191,127 @@ function importPrivateKey(pem) {
     return base64;
   }
 
-/*
-Copyright (c) 2011, Daniel Guerrero
-All rights reserved.
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL DANIEL GUERRERO BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
-/**
- * Uses the new array typed in javascript to binary base64 encode/decode
- * at the moment just decodes a binary base64 encoded
- * into either an ArrayBuffer (decodeArrayBuffer)
- * or into an Uint8Array (decode)
- * 
- * References:
- * https://developer.mozilla.org/en/JavaScript_typed_arrays/ArrayBuffer
- * https://developer.mozilla.org/en/JavaScript_typed_arrays/Uint8Array
- */
+function base64Decode( string )
+{
+    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    var outLen = string.length*3/4 - ((string.length - (string.indexOf('=')>=0?string.indexOf('='):string.length))) 
+    var result = new ArrayBuffer(outLen)
+    var arr = new Uint8Array(result)
 
-var Base64Binary = {
-	_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-	
-	/* will return a  Uint8Array type */
-	decodeArrayBuffer: function(input) {
-		var bytes = (input.length/4) * 3;
-		var ab = new ArrayBuffer(bytes);
-		this.decode(input, ab);
-		
-		return ab;
-	},
+    var i = 0;
+    var arrIdx = 0;
+    do {
+        var b1 = characters.indexOf( string.charAt(i++) );
+        var b2 = characters.indexOf( string.charAt(i++) );
+        var b3 = characters.indexOf( string.charAt(i++) );
+        var b4 = characters.indexOf( string.charAt(i++) );
 
-	removePaddingChars: function(input){
-		var lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
-		if(lkey == 64){
-			return input.substring(0,input.length - 1);
-		}
-		return input;
-	},
+        var a = ( ( b1 & 0x3F ) << 2 ) | ( ( b2 >> 4 ) & 0x3 );
+        var b = ( ( b2 & 0xF  ) << 4 ) | ( ( b3 >> 2 ) & 0xF );
+        var c = ( ( b3 & 0x3  ) << 6 ) | ( b4 & 0x3F );
 
-	decode: function (input, arrayBuffer) {
-		//get last chars to see if are valid
-		input = this.removePaddingChars(input);
-		input = this.removePaddingChars(input);
-
-		var bytes = parseInt((input.length / 4) * 3, 10);
-		
-		var uarray;
-		var chr1, chr2, chr3;
-		var enc1, enc2, enc3, enc4;
-		var i = 0;
-		var j = 0;
-		
-		if (arrayBuffer)
-			uarray = new Uint8Array(arrayBuffer);
-		else
-			uarray = new Uint8Array(bytes);
-		
-		input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-		
-		for (i=0; i<bytes; i+=3) {	
-			//get the 3 octects in 4 ascii chars
-			enc1 = this._keyStr.indexOf(input.charAt(j++));
-			enc2 = this._keyStr.indexOf(input.charAt(j++));
-			enc3 = this._keyStr.indexOf(input.charAt(j++));
-			enc4 = this._keyStr.indexOf(input.charAt(j++));
-	
-			chr1 = (enc1 << 2) | (enc2 >> 4);
-			chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-			chr3 = ((enc3 & 3) << 6) | enc4;
-	
-			uarray[i] = chr1;			
-			if (enc3 != 64) uarray[i+1] = chr2;
-			if (enc4 != 64) uarray[i+2] = chr3;
-		}
-	
-		return uarray;	
-	}
+        if (arrIdx<outLen) arr[arrIdx++]=a
+        if (arrIdx<outLen) arr[arrIdx++]=b
+        if (arrIdx<outLen) arr[arrIdx++]=c
+    } while( i < string.length );
+    return result;
 }
+
+
+
+// /*
+// Copyright (c) 2011, Daniel Guerrero
+// All rights reserved.
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL DANIEL GUERRERO BE LIABLE FOR ANY
+// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//  */
+
+// /**
+//  * Uses the new array typed in javascript to binary base64 encode/decode
+//  * at the moment just decodes a binary base64 encoded
+//  * into either an ArrayBuffer (decodeArrayBuffer)
+//  * or into an Uint8Array (decode)
+//  * 
+//  * References:
+//  * https://developer.mozilla.org/en/JavaScript_typed_arrays/ArrayBuffer
+//  * https://developer.mozilla.org/en/JavaScript_typed_arrays/Uint8Array
+//  */
+
+// var Base64Binary = {
+// 	_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+	
+// 	/* will return a  Uint8Array type */
+// 	decodeArrayBuffer: function(input) {
+// 		var bytes = (input.length/4) * 3;
+// 		var ab = new ArrayBuffer(bytes);
+// 		this.decode(input, ab);
+		
+// 		return ab;
+// 	},
+
+// 	removePaddingChars: function(input){
+// 		var lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
+// 		if(lkey == 64){
+// 			return input.substring(0,input.length - 1);
+// 		}
+// 		return input;
+// 	},
+
+// 	decode: function (input, arrayBuffer) {
+// 		//get last chars to see if are valid
+// 		input = this.removePaddingChars(input);
+// 		input = this.removePaddingChars(input);
+
+// 		var bytes = parseInt((input.length / 4) * 3, 10);
+		
+// 		var uarray;
+// 		var chr1, chr2, chr3;
+// 		var enc1, enc2, enc3, enc4;
+// 		var i = 0;
+// 		var j = 0;
+		
+// 		if (arrayBuffer)
+// 			uarray = new Uint8Array(arrayBuffer);
+// 		else
+// 			uarray = new Uint8Array(bytes);
+		
+// 		input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+		
+// 		for (i=0; i<bytes; i+=3) {	
+// 			//get the 3 octects in 4 ascii chars
+// 			enc1 = this._keyStr.indexOf(input.charAt(j++));
+// 			enc2 = this._keyStr.indexOf(input.charAt(j++));
+// 			enc3 = this._keyStr.indexOf(input.charAt(j++));
+// 			enc4 = this._keyStr.indexOf(input.charAt(j++));
+	
+// 			chr1 = (enc1 << 2) | (enc2 >> 4);
+// 			chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+// 			chr3 = ((enc3 & 3) << 6) | enc4;
+	
+// 			uarray[i] = chr1;			
+// 			if (enc3 != 64) uarray[i+1] = chr2;
+// 			if (enc4 != 64) uarray[i+2] = chr3;
+// 		}
+	
+// 		return uarray;	
+// 	}
+// }
 
 async function loadTemplate(template) {
     const resp = await fetch(template) //{headers:{"Cache-Control":"no-cache"}}
@@ -306,7 +368,7 @@ async function main(){
     const pkpInputArr = encoder.encode(pkpInput)
     //console.log(`PKP input: ${pkpInput}`)
     const pkpValueArr = await crypto.subtle.sign("RSASSA-PKCS1-v1_5",key,pkpInputArr)
-    const pkpValueB64 = base64ArrayBuffer(pkpValueArr)
+    const pkpValueB64 = Base64Binary. base64ArrayBuffer(pkpValueArr)
     console.log(`pkp value: ${pkpValueB64}`)
     data.pkp = pkpValueB64
 
