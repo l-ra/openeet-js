@@ -1,8 +1,8 @@
-const data = {
+const dataIn = {
 	"dat_odesl":"2019-10-31T01:44:45+01:00",
 	"prvni_zaslani":"true",
 	"uuid_zpravy":"8c13f57e-e250-4fcd-99d8-77b1088d4b84",
-	"dic_popl":"CZ7312261506",
+	"dic_popl":"CZ00000019",
 	"id_provoz":"41",
 	"id_pokl":"POKLADNA01",
 	"porad_cis":"1",
@@ -43,7 +43,7 @@ kG2TVi0t2EQa5xCBbsadl82uKB50+BbViRkaHQUinFDKLZWlUQdjgLT7U1PXza4W
 A6ns1H9hLvnZpCRasR6oMVqf
 -----END PRIVATE KEY-----
 `
-const certificate = `-----BEGIN CERTIFICATE-----
+const certificateIn = `-----BEGIN CERTIFICATE-----
 MIIEmTCCA4GgAwIBAgIFAKCnuv0wDQYJKoZIhvcNAQELBQAwdzESMBAGCgmSJomT
 8ixkARkWAkNaMUMwQQYDVQQKDDrEjGVza8OhIFJlcHVibGlrYSDigJMgR2VuZXLD
 oWxuw60gZmluYW7EjW7DrSDFmWVkaXRlbHN0dsOtMRwwGgYDVQQDExNFRVQgQ0Eg
@@ -209,9 +209,6 @@ function base64Decode( string )
     return result;
 }
 
-
-
-
 async function loadTemplate(template) {
     const resp = await fetch(template) //{headers:{"Cache-Control":"no-cache"}}
     return await resp.arrayBuffer()
@@ -249,9 +246,8 @@ async function loadTemplates(){
     return ret;
 }
 
-async function main(){
+async function generateEetMessage(data, certificate, key){
     const templates  = await loadTemplates()
-    const key = await importPrivateKey(privateKey)
 
     //init data
     if (!data.dat_odesl) {
@@ -263,134 +259,103 @@ async function main(){
     if (!data.uuid_zpravy) {
         data.uuid_zpravy = uuidv4();
     } 
+    if (!data.dic_popl) throw new Error("chybi polozka dic_popl")
+    if (!data.id_provoz) throw new Error("chybi polozka id_provoz")
+    if (!data.id_pokl) throw new Error("chybi polozka id_pokl")
+    if (!data.porad_cis) throw new Error("chybi polozka porad_cis")
+    if (!data.celk_trzba) throw new Error("chybi polozka celk_trzba")
+
     const pkpInput = `${data["dic_popl"]}|${data["id_provoz"]}|${data["id_pokl"]}|${data["porad_cis"]}|${data["dat_trzby"]}|${data["celk_trzba"]}`
     const pkpInputArr = encoder.encode(pkpInput)
     //console.log(`PKP input: ${pkpInput}`)
     const pkpValueArr = await crypto.subtle.sign("RSASSA-PKCS1-v1_5",key,pkpInputArr)
     const pkpValueB64 = base64Encode(pkpValueArr)
-    console.log(`pkp value: ${pkpValueB64}`)
+    //console.log(`pkp value: ${pkpValueB64}`)
     data.pkp = pkpValueB64
+    data.certb64 = pem2derB64(certificate)
 
+    const pkpHashArr = await crypto.subtle.digest("SHA-1", pkpValueArr)
+    const pkpHashHex = buf2hex(pkpHashArr).toUpperCase()
+    data.bkp = `${pkpHashHex.slice(0,8)}-${pkpHashHex.slice(8,16)}-${pkpHashHex.slice(16,24)}-${pkpHashHex.slice(24,32)}-${pkpHashHex.slice(32)}`
+    //console.log(`pkpHashHex:${pkpHashHex}`)
+    //console.log(`bkp:${data.bkp}`)
 
+    // construct body using data values replacement
+    let digestFinal = decoder.decode(templates.template_body)
+    Object.keys(data).forEach((key)=>{
+      //console.log(`digestFinal: ${digestFinal}`)
+      digestFinal = digestFinal.replace(`$\{${key}\}`,data[key])
+      digestFinal = digestFinal.replace(`@\{${key}\}`,`${key}="${data[key]}"`)
+    })
+    //remove unused fields
+    digestFinal=digestFinal.replace(/\$\{[a-z_0-9:]+\}/gm,"");
+    digestFinal=digestFinal.replace(/ @\{[a-z_0-9:]+\}/gm,"");
+    //console.log(`digestFinal: ${digestFinal}`)
+    data.soap_body = digestFinal
+
+    // compute body digest
+    const digestData = encoder.encode(digestFinal)
+    const digestValueArr = await crypto.subtle.digest("SHA-256",digestData)
+    const digestValue = base64Encode(digestValueArr)
+    data.digest = digestValue
+
+    // construct signature using data replacement
+    let signatureFinal = decoder.decode(templates.template_signature)
+    Object.keys(data).forEach((key)=>{
+      signatureFinal = signatureFinal.replace(`$\{${key}\}`,data[key])
+      signatureFinal = signatureFinal.replace(`@\{${key}\}`,`${key}="${data[key]}"`)
+    })
+    //remove unused fields
+    signatureFinal=signatureFinal.replace(/\$\{[a-z_0-9:]+\}/gm,"");
+    signatureFinal=signatureFinal.replace(/ @\{[a-z_0-9:]+\}/gm,"");
+    //console.log(`signatureFinal: ${signatureFinal}`)
+    const signatureFinalArr  = encoder.encode(signatureFinal)
+    const signatureValue = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", key, signatureFinalArr)
+    data.signature = base64Encode(signatureValue)
+
+    // construct final xml file using data replacement
+    let xmlFinal = decoder.decode(templates.template_request)
+    Object.keys(data).forEach((key)=>{
+      xmlFinal = xmlFinal.replace(`$\{${key}\}`,data[key])
+      xmlFinal = xmlFinal.replace(`@\{${key}\}`,`${key}="${data[key]}"`)
+    })
+    //remove unused fields
+    xmlFinal=xmlFinal.replace(/\$\{[a-z_0-9:]+\}/gm,"");
+    xmlFinal=xmlFinal.replace(/ @\{[a-z_0-9:]+\}/gm,"");
+    //console.log(`xmlFinal: ${xmlFinal}`)
+    
+    return xmlFinal
+}
+
+async function send(xmlFinal, pg){
+  const url = pg?"https://pg.eet.cz/eet/services/EETServiceSOAP/v3":"https://prod.eet.cz/eet/services/EETServiceSOAP/v3"
+  const resp = await fetch(url, {
+    method: "POST",
+    headers:  {
+      "Content-Type": "text/xml;charset=UTF-8",
+      "SOAPAction": "http://fs.mfcr.cz/eet/OdeslaniTrzby"
+    },
+    mode: "no-cors",
+    body: xmlFinal
+  })
+
+  if (resp.status==200){
+    const respBodyArr = await resp.arrayBuffer();
+    const respBody = decoder.decode(respBodyArr)
+    console.log(`registration result: ${respBody}`)  
+  } else {
+    console.log(`registration failed ${resp.status}: ${resp.statusText}`)
+  }
+}
+
+async function main(){
+  const key = await importPrivateKey(privateKey)
+  const xmlFinal = await generateEetMessage(dataIn, certificateIn, key)
+  const resp = await send(xmlFinal, true) //pg send
 }
 
 main()
 .then(()=>{console.log("PoC done")})
-//.catch((err)=>{console.error("PoC failed",err)})
-
-/*
-
-#get certb64
-$certb64File=$dir."/work/certb64";
-system("awk '/-----BEGIN CERTIFICATE-----/{flag=1;next}/-----END CERTIFICATE-----/{exit}flag' $p12File.crt | tr -d '\n' | tr -d '\r' > $certb64File");
-$data["certb64"]=file_get_contents($certb64File);
-
-#compute rsassa-pkcs1_5 signature using demo key
-$pkpValueFile=$dir."/work/pkp-value";
-$certFile=$p12File.".crt";
-$keyFile=$p12File.".key";
-$signDataCmd= "openssl sha256 -binary $pkpInputFile " #compute hash
-             ."| openssl pkeyutl -sign -inkey $keyFile -pkeyopt digest:SHA256 " #apply rsa signature alg to the hash
-             ."| base64 -w 0 > $pkpValueFile";  # base64 resulting raw signature 
-system($signDataCmd);
-$pkpValue=file_get_contents($pkpValueFile);
-$data["pkp"]=$pkpValue;
+.catch((err)=>{console.error("PoC failed",err)})
 
 
-#compute BKP
-#shit - more than hour spent until great discovery - BKP IS CASE SENSITIVE - the hexcode must be uppercase to be accepted as valid
-$bkpValueFile=$dir."/work/bkp-value";
-$digestCmd= "base64 -d $pkpValueFile "    #take PKP base64 encoded value and decode back to binary
-           ."| openssl sha1 -binary "    #compute SHA1 over the binary representation of the signature
-           ."| xxd -p "                   #hexdump resulting hash value
-           ."| tr -d \" \\n\" "           #remove spaces and newlines added by xxd
-           ."| tr \"abcdef\" \"ABCDEF\""  #upercase the hex code to be recognized by EET server as valid (WTF WTF WTF)
-           ."| sed -e \"s/\\(........\\)/\\1-/g\" | sed -e \"s/-\$//\" > $bkpValueFile";  #and format the hexdump of hash according to spec (WHY ? who knows!)
-system($digestCmd);
-$bkpValue=file_get_contents($bkpValueFile);
-#for debug
-#$bkpValue=file_get_contents($dir."/data/example-bkp");
-#end debug shit
-$data["bkp"]=$bkpValue;
-
-
-
-
-
-#compute digest from canonicalized data of the Body element based on template extracted enriched with business data
-#replace the placeholders with real business data and stpore to file  
-$digestFinal=$bodyTemplate;
-#fill in data in the digest first
-foreach ($data as $key => $value) {
-	$digestFinal=str_replace("\${".$key."}",$value,$digestFinal);
-  $digestFinal=str_replace("@{".$key."}","$key=\"$value\"",$digestFinal);
-}
-#remove unused fields
-#$digestFinal=preg_replace("/ [a-z_0-9]+=\"\\$\\{[0-9_a-z]+\\}\"/","",$digestFinal);
-$digestFinal=preg_replace("/\\$\\{[a-z_0-9:]+\\}/","",$digestFinal);
-$digestFinal=preg_replace("/ @\\{[a-z_0-9:]+\\}/","",$digestFinal);
-
-#$digestFinal=preg_replace("/ @/","BUBUBUBU",$digestFinal);
-
-$digestDataFile=$dir."/work/digest-data";
-$digestValueFile=$dir."/work/digest-value";
-file_put_contents($digestDataFile, $digestFinal);
-$data["soap_body"]=$digestFinal;
-
-#compute digest over the enriched data
-$digestCmd= "openssl sha256 -binary $digestDataFile "  #compute hash
-           ."| base64  "                               #apply base64 according to XMLDSig
-           ."| tr -d \" \\n\" > $digestValueFile";     #fix extra spaces & newlines
-system($digestCmd);
-$digestValue=file_get_contents($digestValueFile);
-$data["digest"]=$digestValue; #add digest to data - it is used in the next replacement step
-
-
-#compute signature value from canonicalized siginfo enriched with digest value 
-#replace placeholders - in fact the only placeholder in signaturte template needs to be replaced - ${digest}
-$signatureFinal=$signatureTemplate;
-foreach ($data as $key => $value) {
-	$signatureFinal=str_replace("\${".$key."}",$value,$signatureFinal);
-  $signatureFinal=str_replace("@{".$key."}","$key=\"$value\"",$signatureFinal);
-}
-#remove unused fields
-#$signatureFinal=preg_replace("/ [a-z_0-9]+=\"\\$\\{[0-9_a-z]+\\}\"/","",$signatureFinal);
-$signatureFinal=preg_replace("/\\$\\{[a-z_0-9]+\\}/","",$signatureFinal);
-$signatureFinal=preg_replace("/ @\\{[a-z_0-9]+\\}/","",$signatureFinal);
-
-
-$signatureDataFile=$dir."/work/signature-data";
-file_put_contents($signatureDataFile, $signatureFinal);
-#compute rsassa-pkcs1_5 over the data 
-$signatureValueFile=$dir."/work/signature-value";
-$signSigCmd= "openssl sha256 -binary $signatureDataFile "    #compute hash
-            ."| openssl pkeyutl -sign -inkey $keyFile -pkeyopt digest:SHA256 "  #compute sig of the hash
-            ."| base64 -w 0 > $signatureValueFile"; #apply base64 according to XMLDSig
-system($signSigCmd);
-$signatureValue=file_get_contents($signatureValueFile);
-$data["signature"]=$signatureValue;
-
-#complete XML with all the values computes
-$xmlFinal=$requestTemplate;
-foreach ($data as $key => $value) {
-	$xmlFinal=str_replace("\${".$key."}",$value,$xmlFinal);
-  $xmlFinal=str_replace("@{".$key."}","$key=\"$value\"",$xmlFinal);
-}
-#remove unused fields
-#$xmlFinal=preg_replace("/ [a-z_0-9]+=\"\\$\\{[0-9_a-z]+\\}\"/","",$xmlFinal);
-$xmlFinal=preg_replace("/\\$\\{[a-z_0-9]+\\}/","",$xmlFinal);
-$xmlFinal=preg_replace("/@\\{[a-z_0-9]+\\}/","",$xmlFinal);
-
-$signedMessageFile=$dir."/work/signed-message";
-file_put_contents($signedMessageFile, $xmlFinal);
-
-#selfcheck - to be sure we had templates right and didn't messed anything
-#the verification produces binary snapshot of digested and signed data
-#work/digest-data-verify must be binary equal to work/digest-data
-#work/signature-data-verify must be binary equal to work/signature-data
-#if not - difference must be eliminated by changing inputs/process 
-#during development the only lline end in uuid escaped - now it is fixed and working well
-$xmlsecCmd="xmlsec1 --verify --store-references --store-signatures --pubkey-cert-pem $certFile $signedMessageFile | php $dir/extract-c14n-templates.php $dir/work/digest-data-verify $dir/work/signature-data-verify";
-system($xmlsecCmd);
-
-*/
