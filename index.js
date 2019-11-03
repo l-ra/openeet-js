@@ -1,3 +1,83 @@
+const templatesB64 = {
+  template_body: {
+    data: `PHNvYXA6Qm9keSB4bWxuczpzb2FwPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2Vu
+    dmVsb3BlLyIgeG1sbnM6d3N1PSJodHRwOi8vZG9jcy5vYXNpcy1vcGVuLm9yZy93c3MvMjAwNC8w
+    MS9vYXNpcy0yMDA0MDEtd3NzLXdzc2VjdXJpdHktdXRpbGl0eS0xLjAueHNkIiB3c3U6SWQ9IlRo
+    ZUJvZHkiIHhtbDppZD0iVGhlQm9keSI+CiAgICA8VHJ6YmEgeG1sbnM9Imh0dHA6Ly9mcy5tZmNy
+    LmN6L2VldC9zY2hlbWEvdjMiPgogICAgICA8SGxhdmlja2EgQHtkYXRfb2Rlc2x9IEB7b3ZlcmVu
+    aX0gQHtwcnZuaV96YXNsYW5pfSBAe3V1aWRfenByYXZ5fT48L0hsYXZpY2thPgogICAgICA8RGF0
+    YSBAe2NlbGtfdHJ6YmF9IEB7Y2VycF96dWN0fSBAe2Nlc3Rfc2x1en0gQHtkYW4xfSBAe2RhbjJ9
+    IEB7ZGFuM30gQHtkYXRfdHJ6Ynl9IEB7ZGljX3BvcGx9IEB7ZGljX3BvdmVydWppY2lob30gQHtp
+    ZF9wb2tsfSBAe2lkX3Byb3Zven0gQHtwb3JhZF9jaXN9IEB7cG91eml0X3pib3oxfSBAe3BvdXpp
+    dF96Ym96Mn0gQHtwb3V6aXRfemJvejN9IEB7cmV6aW19IEB7dXJjZW5vX2NlcnBfenVjdH0gQHt6
+    YWtsX2RhbjF9IEB7emFrbF9kYW4yfSBAe3pha2xfZGFuM30gQHt6YWtsX25lcG9kbF9kcGh9Pjwv
+    RGF0YT4KICAgICAgPEtvbnRyb2xuaUtvZHk+CiAgICAgICAgPHBrcCBjaXBoZXI9IlJTQTIwNDgi
+    IGRpZ2VzdD0iU0hBMjU2IiBlbmNvZGluZz0iYmFzZTY0Ij4ke3BrcH08L3BrcD4KICAgICAgICA8
+    YmtwIGRpZ2VzdD0iU0hBMSIgZW5jb2Rpbmc9ImJhc2UxNiI+JHtia3B9PC9ia3A+CiAgICAgIDwv
+    S29udHJvbG5pS29keT4KICAgIDwvVHJ6YmE+CiAgPC9zb2FwOkJvZHk+`,
+    sha1: "3fc3de46f773642c76a00e6a287ff64f6d0f30fb"
+  },
+  template_request: {
+    data: `PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHNvYXA6RW52ZWxvcGUgeG1s
+    bnM6c29hcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgogIDxT
+    T0FQLUVOVjpIZWFkZXIgeG1sbnM6U09BUC1FTlY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3Jn
+    L3NvYXAvZW52ZWxvcGUvIj4KICAgIDx3c3NlOlNlY3VyaXR5IHhtbG5zOndzc2U9Imh0dHA6Ly9k
+    b2NzLm9hc2lzLW9wZW4ub3JnL3dzcy8yMDA0LzAxL29hc2lzLTIwMDQwMS13c3Mtd3NzZWN1cml0
+    eS1zZWNleHQtMS4wLnhzZCIgeG1sbnM6d3N1PSJodHRwOi8vZG9jcy5vYXNpcy1vcGVuLm9yZy93
+    c3MvMjAwNC8wMS9vYXNpcy0yMDA0MDEtd3NzLXdzc2VjdXJpdHktdXRpbGl0eS0xLjAueHNkIiBz
+    b2FwOm11c3RVbmRlcnN0YW5kPSIxIj4KICAgICAgPHdzc2U6QmluYXJ5U2VjdXJpdHlUb2tlbiBF
+    bmNvZGluZ1R5cGU9Imh0dHA6Ly9kb2NzLm9hc2lzLW9wZW4ub3JnL3dzcy8yMDA0LzAxL29hc2lz
+    LTIwMDQwMS13c3Mtc29hcC1tZXNzYWdlLXNlY3VyaXR5LTEuMCNCYXNlNjRCaW5hcnkiIFZhbHVl
+    VHlwZT0iaHR0cDovL2RvY3Mub2FzaXMtb3Blbi5vcmcvd3NzLzIwMDQvMDEvb2FzaXMtMjAwNDAx
+    LXdzcy14NTA5LXRva2VuLXByb2ZpbGUtMS4wI1g1MDl2MyIgd3N1OklkPSJUaGVDZXJ0Ij4ke2Nl
+    cnRiNjR9PC93c3NlOkJpbmFyeVNlY3VyaXR5VG9rZW4+CiAgICAgIDxkczpTaWduYXR1cmUgeG1s
+    bnM6ZHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiIElkPSJUaGVTaWduYXR1
+    cmUiPgogICAgICAgIDxkczpTaWduZWRJbmZvPgogICAgICAgICAgPGRzOkNhbm9uaWNhbGl6YXRp
+    b25NZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzEwL3htbC1leGMtYzE0
+    biMiPgogICAgICAgICAgICA8ZWM6SW5jbHVzaXZlTmFtZXNwYWNlcyB4bWxuczplYz0iaHR0cDov
+    L3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIiBQcmVmaXhMaXN0PSJzb2FwIi8+CiAg
+    ICAgICAgICA8L2RzOkNhbm9uaWNhbGl6YXRpb25NZXRob2Q+CiAgICAgICAgICA8ZHM6U2lnbmF0
+    dXJlTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxkc2lnLW1v
+    cmUjcnNhLXNoYTI1NiIvPgogICAgICAgICAgPGRzOlJlZmVyZW5jZSBVUkk9IiNUaGVCb2R5Ij4K
+    ICAgICAgICAgICAgPGRzOlRyYW5zZm9ybXM+CiAgICAgICAgICAgICAgPGRzOlRyYW5zZm9ybSBB
+    bGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPgogICAg
+    ICAgICAgICA8L2RzOlRyYW5zZm9ybXM+CiAgICAgICAgICAgIDxkczpEaWdlc3RNZXRob2QgQWxn
+    b3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNzaGEyNTYiLz4KICAgICAg
+    ICAgICAgPGRzOkRpZ2VzdFZhbHVlPiR7ZGlnZXN0fTwvZHM6RGlnZXN0VmFsdWU+PCEtLWNvbXB1
+    dGVkIGJ5IHhtbGRpZyBlbmdpbmUgLS0+CiAgICAgICAgICA8L2RzOlJlZmVyZW5jZT4KICAgICAg
+    ICA8L2RzOlNpZ25lZEluZm8+CiAgICAgICAgPGRzOlNpZ25hdHVyZVZhbHVlPiR7c2lnbmF0dXJl
+    fTwvZHM6U2lnbmF0dXJlVmFsdWU+PCEtLWNvbXB1dGVkIGJ5IHhtbGRpZyBlbmdpbmUgLS0+CiAg
+    ICAgICAgPGRzOktleUluZm8gSWQ9IlRoZUtleUluZm8iPgogICAgICAgICAgPHdzc2U6U2VjdXJp
+    dHlUb2tlblJlZmVyZW5jZSB3c3U6SWQ9IlRoZVNlY3VyaXR5VG9rZW5SZWZlcmVuY2UiPgogICAg
+    ICAgICAgICA8d3NzZTpSZWZlcmVuY2UgVVJJPSIjVGhlQ2VydCIgVmFsdWVUeXBlPSJodHRwOi8v
+    ZG9jcy5vYXNpcy1vcGVuLm9yZy93c3MvMjAwNC8wMS9vYXNpcy0yMDA0MDEtd3NzLXg1MDktdG9r
+    ZW4tcHJvZmlsZS0xLjAjWDUwOXYzIi8+CiAgICAgICAgICA8L3dzc2U6U2VjdXJpdHlUb2tlblJl
+    ZmVyZW5jZT4KICAgICAgICA8L2RzOktleUluZm8+CiAgICAgIDwvZHM6U2lnbmF0dXJlPgogICAg
+    PC93c3NlOlNlY3VyaXR5PgogIDwvU09BUC1FTlY6SGVhZGVyPgogICR7c29hcF9ib2R5fQo8L3Nv
+    YXA6RW52ZWxvcGU+Cg==`,
+    sha1: "15cf455af889baae517745120354f917fe09bfcf" 
+  },
+  template_signature: {
+    data: `PGRzOlNpZ25lZEluZm8geG1sbnM6ZHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNp
+    ZyMiIHhtbG5zOnNvYXA9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUv
+    Ij4KICAgICAgICAgIDxkczpDYW5vbmljYWxpemF0aW9uTWV0aG9kIEFsZ29yaXRobT0iaHR0cDov
+    L3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIj4KICAgICAgICAgICAgPGVjOkluY2x1
+    c2l2ZU5hbWVzcGFjZXMgeG1sbnM6ZWM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4
+    Yy1jMTRuIyIgUHJlZml4TGlzdD0ic29hcCI+PC9lYzpJbmNsdXNpdmVOYW1lc3BhY2VzPgogICAg
+    ICAgICAgPC9kczpDYW5vbmljYWxpemF0aW9uTWV0aG9kPgogICAgICAgICAgPGRzOlNpZ25hdHVy
+    ZU1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZHNpZy1tb3Jl
+    I3JzYS1zaGEyNTYiPjwvZHM6U2lnbmF0dXJlTWV0aG9kPgogICAgICAgICAgPGRzOlJlZmVyZW5j
+    ZSBVUkk9IiNUaGVCb2R5Ij4KICAgICAgICAgICAgPGRzOlRyYW5zZm9ybXM+CiAgICAgICAgICAg
+    ICAgPGRzOlRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1s
+    LWV4Yy1jMTRuIyI+PC9kczpUcmFuc2Zvcm0+CiAgICAgICAgICAgIDwvZHM6VHJhbnNmb3Jtcz4K
+    ICAgICAgICAgICAgPGRzOkRpZ2VzdE1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3Jn
+    LzIwMDEvMDQveG1sZW5jI3NoYTI1NiI+PC9kczpEaWdlc3RNZXRob2Q+CiAgICAgICAgICAgIDxk
+    czpEaWdlc3RWYWx1ZT4ke2RpZ2VzdH08L2RzOkRpZ2VzdFZhbHVlPgogICAgICAgICAgPC9kczpS
+    ZWZlcmVuY2U+CiAgICAgICAgPC9kczpTaWduZWRJbmZvPg==`,
+    sha1: "78df1d563048085b2e870e51fd2a56d8571ec1e6"
+  }
+}
+
 const dataIn = {
 	"dat_odesl":"2019-10-31T01:44:45+01:00",
 	"prvni_zaslani":"true",
@@ -209,41 +289,25 @@ function base64Decode( string )
     return result;
 }
 
-async function loadTemplate(template) {
-    const resp = await fetch(template) //{headers:{"Cache-Control":"no-cache"}}
-    return await resp.arrayBuffer()
-}
-
-async function checkHash(name, hash,data){
+async function checkHash(name, hash, data){
     const computedArr = await crypto.subtle.digest("SHA-1",data)
     const computed = buf2hex(computedArr)
     if ( computed.toLowerCase() !== hash.toLowerCase() ) throw new Error(`Failed to check hash for ${name} expected: ${hash} computed: ${computed}`)
 }
 
+async function loadTemplate(template) {
+  const resp = await fetch(template) 
+  return await resp.arrayBuffer()
+}
+
 async function loadTemplates(){
-
-    const [sha1sum, template_body, template_request, template_signature] = await Promise.all([
-        await loadTemplate("templates/sha1sum.txt"),
-        await loadTemplate("templates/template_body.txt"),
-        await loadTemplate("templates/template_request.txt"),
-        await loadTemplate("templates/template_signature.txt")
-    ])
-
-    const ret = {sha1sum, template_body, template_request, template_signature} 
-
-    const sha1sumTxt = decoder.decode(sha1sum)
-    sha1sumTxt.split("\n")
-    .map((v)=>{
-        if (v=="") return null;
-        const [hash,filename] = v.split(/\s+/)
-        return {hash, filename}
-    })
-    .forEach((v)=>{
-        if (v==null) return;
-        //console.log(`checking sha1 ${v.hash} of file ${v.filename.replace(".txt","")}`)
-        checkHash(v.filename.replace(".txt",""), v.hash, ret[v.filename.replace(".txt","")])
-    })
-    return ret;
+  const template_body = pem2derArr(templatesB64.template_body.data)
+  const template_request = pem2derArr(templatesB64.template_request.data)
+  const template_signature = pem2derArr(templatesB64.template_signature.data)
+  checkHash(template_body,templatesB64.template_body.sha1)
+  checkHash(template_request,templatesB64.template_request.sha1)
+  checkHash(template_signature,templatesB64.template_signature.sha1)
+  return { template_body, template_request, template_signature}
 }
 
 async function generateEetMessage(data, certificate, key){
