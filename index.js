@@ -170,7 +170,7 @@ function uuidv4() {
 
 
 function pem2derB64(pem){
-    return pem.replace(/-----BEGIN [^-]+-----/gm,"").replace(/-----END [^-]+-----/gm,"").replace(/\n/gm,"")
+    return pem.replace(/-----BEGIN [^-]+-----/gm,"").replace(/-----END [^-]+-----/gm,"").replace(/[\n \t]/gm,"")
 }
 
 function pem2derArr(pem){
@@ -289,7 +289,7 @@ function base64Decode( string )
     return result;
 }
 
-async function checkHash(name, hash, data){
+async function checkHash(name, data, hash){
     const computedArr = await crypto.subtle.digest("SHA-1",data)
     const computed = buf2hex(computedArr)
     if ( computed.toLowerCase() !== hash.toLowerCase() ) throw new Error(`Failed to check hash for ${name} expected: ${hash} computed: ${computed}`)
@@ -304,9 +304,9 @@ async function loadTemplates(){
   const template_body = pem2derArr(templatesB64.template_body.data)
   const template_request = pem2derArr(templatesB64.template_request.data)
   const template_signature = pem2derArr(templatesB64.template_signature.data)
-  checkHash(template_body,templatesB64.template_body.sha1)
-  checkHash(template_request,templatesB64.template_request.sha1)
-  checkHash(template_signature,templatesB64.template_signature.sha1)
+  checkHash("body", template_body,templatesB64.template_body.sha1)
+  checkHash("request", template_request,templatesB64.template_request.sha1)
+  checkHash("signature", template_signature,templatesB64.template_signature.sha1)
   return { template_body, template_request, template_signature}
 }
 
